@@ -19,7 +19,7 @@
 
   productRouter.get("/" , async(req , res) => {
          try {
-          const category=req.query
+          const category=req.query.category
           console.log(category)
           if(category){
                const product = await ProductModel.find({category:category});
