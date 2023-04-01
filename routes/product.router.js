@@ -20,25 +20,25 @@
   productRouter.get("/" , async(req , res) => {
      try {
           if(req.query.location == "Aerocity"){
-               const product = await ProductModel.find({value:"Aerocity"});
+               const product = await ProductModel.find({category:"Aerocity"});
                res.status(200).send(product);
           }
           if(req.query.location == "connaughtplace"){
-               const product = await ProductModel.find({value:"Connaught Place"});
+               const product = await ProductModel.find({category:"Connaught Place"});
                res.status(200).send(product);
           }
           if(req.query.location == "rajourigarden"){
-               const product = await ProductModel.find({value:"Rajouri Garden Main Market, Rajouri Garden"});
+               const product = await ProductModel.find({category:"Rajouri Garden Main Market, Rajouri Garden"});
                res.status(200).send(product);
           }
 
           if(req.query.location == "punjabibagh"){
-               const product = await ProductModel.find({value:"Club Road Market, Punjabi Bagh West"});
+               const product = await ProductModel.find({category:"Club Road Market, Punjabi Bagh West"});
                res.status(200).send(product);
           }
 
           if(req.query.location == "hkv"){
-               const product = await ProductModel.find({value:"HKV"});
+               const product = await ProductModel.find({category:"HKV"});
                res.status(200).send(product);
           }
 
