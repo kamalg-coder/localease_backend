@@ -18,8 +18,9 @@
   })
 
   productRouter.get("/" , async(req , res) => {
-     const category=req.query
-     try {
+         try {
+          const category=req.query
+          console.log(category)
           if(category){
                const product = await ProductModel.find({category:category});
                res.status(200).send(product);
@@ -48,8 +49,11 @@
                res.status(200).send(product);
           }
 
-          const product = await ProductModel.find();
-          res.status(200).send(product);
+               const product = await ProductModel.find();
+               res.status(200).send(product);
+          
+
+       
      }
 
      catch(err) {
