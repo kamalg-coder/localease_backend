@@ -6,6 +6,7 @@
   const { cloudinary } = require("../utils/cloudinary");
 
 
+
   productRouter.post("/addproduct", authentication, async (req, res) => {
        try {
             const { adminID, url, img_src, rating_img_src, rating, heading, category, value_2, price, tag, field } = req.body
@@ -27,24 +28,27 @@
   })
 
   productRouter.get("/" , async(req , res) => {
+     const options={
+          maxTimeMS: 20000
+     }
          try {
           const category=req.query.category
           const id=req.query.id
           console.log(category)
           if(category){
-               const product = await ProductModel.find({category:category});
+               const product = await ProductModel.find({category:category},options);
                res.status(200).send(product);
           }
           if(id){
-               const product = await ProductModel.find({_id:id});
+               const product = await ProductModel.find({_id:id},options);
                res.status(200).send(product);
           }
           if((req.query.min) && (req.query.max) ){
-               const product = await ProductModel.find({ price: { $gte: Number(req.query.min), $lte: Number(req.query.max) } });
+               const product = await ProductModel.find({ price: { $gte: Number(req.query.min), $lte: Number(req.query.max) } },options);
                res.status(200).send(product);
           }
 
-               const product = await ProductModel.find();
+               const product = await ProductModel.find({},options);
                res.status(200).send(product);
           
 
