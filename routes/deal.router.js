@@ -21,11 +21,9 @@ dealRouter.post("/adddeal" , async(req , res) => {
 })
 
 dealRouter.get("/" , async(req , res) => {
-     const options={
-          maxTimeMS: 20000
-     }
+   
       try{
-           let deal = await DealModel.find( options);
+           let deal = await DealModel.find();
            res.status(200).send(deal);
       }
       catch(err){

@@ -28,27 +28,25 @@
   })
 
   productRouter.get("/" , async(req , res) => {
-     const options={
-          maxTimeMS: 20000
-     }
+   
          try {
           const category=req.query.category
           const id=req.query.id
           console.log(category)
           if(category){
-               const product = await ProductModel.find({category:category},options);
+               const product = await ProductModel.find({category:category});
                res.status(200).send(product);
           }
           if(id){
-               const product = await ProductModel.find({_id:id},options);
+               const product = await ProductModel.find({_id:id});
                res.status(200).send(product);
           }
           if((req.query.min) && (req.query.max) ){
-               const product = await ProductModel.find({ price: { $gte: Number(req.query.min), $lte: Number(req.query.max) } },options);
+               const product = await ProductModel.find({ price: { $gte: Number(req.query.min), $lte: Number(req.query.max) } });
                res.status(200).send(product);
           }
 
-               const product = await ProductModel.find(options);
+               const product = await ProductModel.find();
                res.status(200).send(product);
           
 
