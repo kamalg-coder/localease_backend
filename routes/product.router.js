@@ -10,17 +10,17 @@
   productRouter.post("/addproduct", authentication, async (req, res) => {
        try {
             const { adminID, url, img_src, rating_img_src, rating, heading, category, value_2, price, tag, field } = req.body
-            if (img_src) {
-                 const uploadRes = await cloudinary.uploader.upload(img_src, {
-                      upload_preset: "localEase_Image"
-                 })
-                 if (uploadRes) {
-                      const product = new ProductModel({ adminID, url, img_src: uploadRes, rating_img_src, rating, heading, category, value_2, price, tag, field });
+          //   if (img_src) {
+          //        const uploadRes = await cloudinary.uploader.upload(img_src, {
+          //             upload_preset: "localEase_Image"
+          //        })
+               //   if (uploadRes) {
+                      const product = new ProductModel({ adminID, url, img_src, rating_img_src, rating, heading, category, value_2, price, tag, field });
                       await product.save();
                       res.status(200).send({ "msg": " Product data successfully added" })
   
-                 }
-            }
+               //   }
+          //   }
        }
        catch (err) {
             res.send({ "msg": err.message })
@@ -62,7 +62,7 @@
     const {productID} = req.params;
     console.log(productID);
      try {
-          const product = await ProductModel.findByIdAndDelete({_id : productID});
+           await ProductModel.findByIdAndDelete({_id : productID});
           res.status(200).send({"msg" : "product deleted successfully"});
      }
 
@@ -74,7 +74,7 @@
  productRouter.patch("/update/:productID" , async(req , res) => {
      const {productID} = req.params;
       try {
-           const product = await ProductModel.findByIdAndUpdate({_id : productID} , req.body);
+           await ProductModel.findByIdAndUpdate({_id : productID} , req.body);
            res.status(200).send({"msg" : "Product Updated successfully"});
       }
  
