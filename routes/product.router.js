@@ -48,7 +48,7 @@
                res.status(200).send(product);
           }
 
-               const product = await ProductModel.find({},options);
+               const product = await ProductModel.find(options);
                res.status(200).send(product);
           
 

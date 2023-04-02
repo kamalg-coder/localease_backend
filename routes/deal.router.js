@@ -25,7 +25,7 @@ dealRouter.get("/" , async(req , res) => {
           maxTimeMS: 20000
      }
       try{
-           let deal = await DealModel.find({}, options);
+           let deal = await DealModel.find( options);
            res.status(200).send(deal);
       }
       catch(err){
