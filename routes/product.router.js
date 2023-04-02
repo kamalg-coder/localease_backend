@@ -3,18 +3,27 @@
   const productRouter = express.Router();
   const {ProductModel} = require("../model/product.model");
   const {authentication}=require("../middleware/admin.middleware")
- 
+  const { cloudinary } = require("../utils/cloudinary");
 
-  productRouter.post("/addproduct" ,authentication, async(req , res) => {
-      try {
-           const product = new ProductModel(req.body);
-           await product.save();
-           res.status(200).send({"msg" : " Product data successfully added"})
-      }
 
-      catch(err) {
-           res.send({"msg" : err.message})
-      }
+  productRouter.post("/addproduct", authentication, async (req, res) => {
+       try {
+            const { adminID, url, img_src, rating_img_src, rating, heading, category, value_2, price, tag, field } = req.body
+            if (img_src) {
+                 const uploadRes = await cloudinary.uploader.upload(img_src, {
+                      upload_preset: "localEase_Image"
+                 })
+                 if (uploadRes) {
+                      const product = new ProductModel({ adminID, url, img_src: uploadRes, rating_img_src, rating, heading, category, value_2, price, tag, field });
+                      await product.save();
+                      res.status(200).send({ "msg": " Product data successfully added" })
+  
+                 }
+            }
+       }
+       catch (err) {
+            res.send({ "msg": err.message })
+       }
   })
 
   productRouter.get("/" , async(req , res) => {
@@ -25,25 +34,6 @@
                const product = await ProductModel.find({category:category});
                res.status(200).send(product);
           }
-          // if(req.query.location == "connaughtplace"){
-          //      const product = await ProductModel.find({category:"Connaught Place"});
-          //      res.status(200).send(product);
-          // }
-          // if(req.query.location == "rajourigarden"){
-          //      const product = await ProductModel.find({category:"Rajouri Garden Main Market, Rajouri Garden"});
-          //      res.status(200).send(product);
-          // }
-
-          // if(req.query.location == "punjabibagh"){
-          //      const product = await ProductModel.find({category:"Club Road Market, Punjabi Bagh West"});
-          //      res.status(200).send(product);
-          // }
-
-          // if(req.query.location == "hkv"){
-          //      const product = await ProductModel.find({category:"HKV"});
-          //      res.status(200).send(product);
-          // }
-
           if((req.query.min) && (req.query.max) ){
                const product = await ProductModel.find({ price: { $gte: Number(req.query.min), $lte: Number(req.query.max) } });
                res.status(200).send(product);
